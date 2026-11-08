@@ -5,6 +5,9 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
+// Backend URL for local development and deployment
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 // Store the team returned by MySQL
 const team = ref(null)
 const loading = ref(true)
@@ -60,7 +63,7 @@ async function fetchTeam() {
     const teamId = route.params.id
 
     const response = await fetch(
-      `http://localhost:3000/api/database/teams/${teamId}`
+      `${API_URL}/api/database/teams/${teamId}`
     )
 
     if (!response.ok) {
@@ -87,7 +90,7 @@ async function fetchPlayers() {
     const teamId = route.params.id
 
     const response = await fetch(
-      `http://localhost:3000/api/database/teams/${teamId}/players`
+      `${API_URL}/api/database/teams/${teamId}/players`
     )
 
     if (!response.ok) {
@@ -116,6 +119,7 @@ watch(() => route.params.id, () => {
   fetchPlayers()
 })
 </script>
+
 
 <template>
   <div class="team-page">

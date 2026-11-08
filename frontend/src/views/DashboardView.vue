@@ -21,6 +21,8 @@ const loadingStandings = ref(false)
 const teamsError = ref('')
 const standingsError = ref('')
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 const selectedCompetitionName = computed(() => {
   const competition = competitions.find(
     item => item.id === selectedCompetition.value
@@ -30,7 +32,7 @@ const selectedCompetitionName = computed(() => {
 
 async function fetchStatistics() {
   try {
-    const response = await fetch('http://localhost:3000/api/statistics')
+    const response = await fetch(`${API_URL}/api/statistics`)
 
     if (!response.ok) {
       throw new Error('Failed to fetch statistics')
@@ -49,7 +51,7 @@ async function fetchTeams(competitionId) {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/database/competitions/${competitionId}/teams`
+      `${API_URL}/api/database/competitions/${competitionId}/teams`
     )
 
     if (!response.ok) {
@@ -81,7 +83,7 @@ async function fetchStandings(competitionId) {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/database/competitions/${competitionId}/standings`
+      `${API_URL}/api/database/competitions/${competitionId}/standings`
     )
 
     if (!response.ok) {
@@ -132,6 +134,7 @@ onMounted(() => {
   fetchStandings(selectedCompetition.value)
 })
 </script>
+
 
 <template>
   <div class="app-container">
